@@ -1,4 +1,4 @@
-import { Formula } from './components/Formula/Formula';
+import { Formula } from './components/formula/Formula';
 import { Toolbar } from './components/Toolbar/Toolbar';
 import { Excel } from './components/excel/Excel'
 import { Header } from './components/header/Header';
@@ -12,5 +12,4 @@ const excel = new Excel('#app', {
 });
 
 excel.render();
-console.log('excel', excel)
 
