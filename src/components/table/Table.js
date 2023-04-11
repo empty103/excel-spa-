@@ -3,16 +3,21 @@ import { createTable } from "./table.template";
 
 import { $ } from '../../core/dom';
 import { resizeHandler } from "./table.resize";
-
-import { isCell, matrix, shouldResize } from "./table.function";
 import { TableSelection } from "./TableSelection";
+
+import {
+  isCell,
+  matrix,
+  shouldResize,
+  nextSelector
+} from "./table.function";
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
 
   constructor($root) {
     super($root, {
-      listeners: ['mousedown']
+      listeners: ['mousedown', 'keydown']
     });
   }
 
@@ -43,6 +48,25 @@ export class Table extends ExcelComponent {
       } else {
         this.selection.select($target);
       }
+    }
+  }
+
+  onKeydown(event) {
+    const keys = [
+      'Enter',
+      'Tab',
+      'ArrowLeft',
+      'ArrowRight',
+      'ArrowDown',
+      'ArrowUp',
+    ];
+
+    const { key } = event;
+
+    if (keys.includes(key) && !event.shiftKey) {
+      const { col, row } = this.selection.current.id(true);
+      const $next = this.$root.find(nextSelector(key, col, row));
+      this.selection.select($next);
     }
   }
 }
