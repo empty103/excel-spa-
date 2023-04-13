@@ -89,6 +89,19 @@ class Dom {
         this.$el.focus();
         return this;
     }
+
+    text(text) {
+        if (typeof text === 'string') {
+            this.$el.textContent = text;
+            return this;
+        }
+
+        if (this.$el.tagName.toLowerCase() === 'input') {
+            return this.$el.value.trim();
+        }
+
+        return this.$el.textContent.trim();
+    }
 }
 
 
