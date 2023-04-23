@@ -25,4 +25,10 @@ export class TableSelection {
         this.group.forEach($cell => $cell.removeClass('selected'));
         this.group = [];
     }
+
+    applyStyle(style) {
+        this.group.forEach($el => {
+            $el.css(style)
+        });
+    }
 }

@@ -13,6 +13,7 @@ import {
 } from "./table.function";
 
 import * as actions from '../../redux/actions';
+import { defauiltStyles } from "../../constants";
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
@@ -47,7 +48,9 @@ export class Table extends ExcelComponent {
       this.selection.current.focus();
     });
 
-    this.$subscribe((state) => { });
+    this.$on('toolbar:applyStyle', (style) => {
+      this.selection.applyStyle(style);
+    });
   }
 
   async resizeTable(event) {
@@ -62,6 +65,7 @@ export class Table extends ExcelComponent {
   selectCell($cell) {
     this.selection.select($cell);
     this.$emit('table:select', $cell);
+    console.log($cell.getStyles(Object.keys(defauiltStyles)))
   }
 
   onMousedown(event) {
@@ -77,7 +81,6 @@ export class Table extends ExcelComponent {
       } else {
         this.selectCell($target);
       }
-
     }
   }
 

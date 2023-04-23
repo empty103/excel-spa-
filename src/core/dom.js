@@ -102,6 +102,13 @@ class Dom {
 
         return this.$el.textContent.trim();
     }
+
+    getStyles(styles = []) {
+        return styles.reduce((result, s) => {
+            result[s] = this.$el.style[s];
+            return result;
+        }, {})
+    }
 }
 
 
