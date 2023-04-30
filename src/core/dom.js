@@ -15,7 +15,8 @@ class Dom {
   }
 
   clear() {
-    return this.html('');
+    this.html('');
+    return this;
   }
 
   on(eventType, callback) {
