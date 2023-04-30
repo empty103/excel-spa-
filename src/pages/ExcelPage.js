@@ -8,16 +8,22 @@ import { createStore } from '../core/createStore';
 import { rootReducer } from '../redux/rootReducer';
 
 import { storage, debounce } from '../core/utils';
-import { initialState } from '../redux/initialState';
+import { normalizeInitialState } from '../redux/initialState';
 
 import { Page } from "../core/routes/Page";
 
+function storageName(param) {
+    return 'excel:' + param;
+}
+
 export class ExcelPage extends Page {
     getRoot() {
-        const store = createStore(rootReducer, initialState);
+        const params = this.params ? this.params : Date.now().toString();
+        const state = storage(storageName(params));
+        const store = createStore(rootReducer, normalizeInitialState(state));
 
         const stateListener = debounce((state) => {
-            storage('excel-state', state);
+            storage(storageName(params), state);
         }, 300);
 
         store.subscribe(stateListener);
